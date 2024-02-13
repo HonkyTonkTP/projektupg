@@ -1,5 +1,6 @@
 :root {
   --clr-text: hsl(198, 25%, 10%);
+  --clr-navtext: hsl(180, 0%, 46%);
   --clr-background: hsl(206, 33%, 96%);
   --clr-primary-100: hsl(201, 34%, 26%);
   --clr-primary-5: hsl(201, 34%, 26%, 0.05);
@@ -23,14 +24,26 @@ body {
 h1,
 h2,
 h3 {
-  /* color: var(--clr-text); */
   line-height: 1.1;
 }
 
-.flow {
+h2 {
+  font-size: 3rem;
+}
+
+img {
+  display: block;
+  width: 100%;
+}
+
+.margin-top-2rem {
   margin-top: 2rem;
 }
 
+/* 
+ Gör så att alla element utom det första inom elementet med klassen flow får extra margin över sig.
+ Detta gör det väldigt enkelt att få bra mellanrum mellan headings och paragrafer etc.
+ */
 .flow > * + * {
   margin-block-start: 1rem;
 }
@@ -41,24 +54,42 @@ h3 {
   background-color: var(--clr-text);
   color: var(--clr-background);
   display: flex;
+  flex-direction: column;
   justify-content: center;
+}
+
+.header p {
+  margin-top: 1rem;
+  align-self: center;
+  opacity: 0.7;
 }
 
 .site-title {
   font-size: 4rem;
   align-self: center;
+  text-align: center;
 }
 
 .navbar {
-  grid-area: main;
+  grid-column: main-start / aside-end;
   grid-row: 2;
-  display: flex;
-  /* border-bottom: 1px solid hsl(206, 33%, 15%); */
+  border-bottom: 1px solid #dddddd;
 }
-
+.navbar .nav {
+  margin-inline: auto;
+  padding-top: 0.8rem;
+}
 .main {
   grid-area: main;
   grid-row: 3;
+}
+
+.main h2 {
+  max-width: 20ch;
+}
+
+.main p {
+  max-width: 120ch;
 }
 
 .aside {
@@ -66,7 +97,6 @@ h3 {
   grid-row: 3;
   background-color: var(--clr-primary-5);
   padding: 2rem;
-  border-radius: 1rem;
 }
 
 .footer {
@@ -74,39 +104,83 @@ h3 {
   grid-row: 5;
   background-color: var(--clr-text);
   color: var(--clr-background);
+  display: flex;
+  justify-content: center;
 }
 
-.navbar ul {
-  list-style: none;
-}
-
-.navbar li {
+.footer p {
   display: flex;
   align-self: center;
 }
 
+.nav ul {
+  list-style: none;
+  gap: 2.5rem;
+  padding-inline-start: 0.2rem;
+}
+
+.nav li {
+  display: flex;
+  align-self: center;
+}
+
+.nav li a {
+  text-decoration: none;
+  color: var(--clr-navtext);
+  transition: opacity 0.3s ease;
+}
+
+.nav li a:hover:not(.active) {
+  opacity: 0.6;
+  transition: opacity 0.3s ease;
+}
+
+.nav li .active {
+  color: var(--clr-text);
+}
+
 .grid-wrapper {
   display: grid; /* Använder grid för huvudsakliga layouten */
-  min-height: 100svh; /* Gör sidan hög nog för mobila enheter */
+  min-height: 100svh; /* Gör sidan minst hög nog för mobila enheter */
 
   /* Namnge gridlinjer och på så sätt skapa grid-areas. */
   grid-template-columns:
-    [full-bredd-start] minmax(auto, 1rem)
-    [inset-start main-start] 4fr [main-end aside-start] 1fr [aside-end inset-end] minmax(
-      auto,
-      1rem
+    [full-bredd-start] minmax(auto, 1.25fr)
+    [inset-start main-start] 4fr [main-end aside-start] minmax(
+      calc(300px + 4rem),
+      1.5fr
     )
+    [aside-end inset-end] minmax(auto, 1.25fr)
     [full-bredd-end];
-  grid-template-rows: 2fr 56px 4fr 2fr 80px;
-  column-gap: 1rem;
+  grid-template-rows: 240px 56px 5fr 240px 80px;
+  column-gap: 5rem;
 }
 
 .flex {
   display: flex;
-  gap: 1rem;
+}
+
+.flex-dir-col {
+  flex-direction: column;
+}
+
+.flex-space-between {
+  justify-content: space-between;
+}
+
+.border-rounded {
+  border-radius: 1rem;
 }
 
 .dekorativ-bild {
   grid-area: full-bredd;
   grid-row: 4;
+  background-image: linear-gradient(
+      to bottom,
+      var(--clr-background),
+      transparent
+    ),
+    url('https://picsum.photos/2000/300?grayscale');
+  background-repeat: no-repeat;
+  background-size: cover;
 }
