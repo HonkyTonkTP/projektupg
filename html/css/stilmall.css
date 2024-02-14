@@ -59,7 +59,7 @@ img {
 }
 
 .header {
-  grid-area: full-bredd;
+  grid-column: full-bredd;
   grid-row: 1;
   background-color: var(--clr-text);
   color: var(--clr-background);
@@ -93,12 +93,12 @@ img {
   padding-top: 0.9rem;
 }
 .main {
-  grid-area: main;
+  grid-column: main;
   grid-row: 3;
 }
 
 .aside {
-  grid-area: aside;
+  grid-column: aside;
   grid-row: 3;
   background-color: var(--clr-primary-5);
   padding: 2rem;
@@ -163,7 +163,7 @@ img {
   display: grid; /* Använder grid för huvudsakliga layouten */
   min-height: 100svh; /* Gör sidan minst hög nog för mobila enheter */
 
-  /* Namnge gridlinjer och på så sätt skapa grid-areas. */
+  /* Namnge gridlinjer och på så sätt skapa grid kolumner. */
   grid-template-columns:
     [full-bredd-start] minmax(auto, 1.25fr)
     [inset-start main-start] 4fr [main-end aside-start] minmax(
@@ -172,11 +172,11 @@ img {
     )
     [aside-end inset-end] minmax(auto, 1.25fr)
     [full-bredd-end];
-  grid-template-rows: 240px 56px 4fr 240px 80px;
+  grid-template-rows: 240px 56px auto 240px 80px;
   column-gap: 4rem;
 }
 
-/* Specialfall för headern då vi vill ha bakgrunden full-bredd men logo och titeln ska vara inom inset */
+/* Specialfall för headern då vi vill ha bakgrunden full-bredd, men logo och titeln ska vara inom inset kolumnen */
 .grid-header {
   display: grid;
   grid-template-columns:
@@ -211,7 +211,7 @@ img {
 }
 
 .dekorativ-bild {
-  grid-area: full-bredd;
+  grid-column: full-bredd;
   grid-row: 4;
   background-image: linear-gradient(
       to bottom,
@@ -221,4 +221,40 @@ img {
     url('https://picsum.photos/2000/300?grayscale');
   background-repeat: no-repeat;
   background-size: cover;
+}
+
+@media (max-width: 1024px) {
+  .grid-wrapper {
+    grid-template-rows: 240px 56px auto auto 240px 80px;
+  }
+
+  .main {
+    grid-column: inset;
+  }
+
+  .aside {
+    grid-column: inset;
+    grid-row: 4;
+    column-gap: 2rem;
+  }
+
+  .dekorativ-bild {
+    grid-row: 5;
+  }
+
+  .footer {
+    grid-row: 6;
+  }
+}
+
+@media (max-width: 840px) {
+  .grid-wrapper {
+    grid-template-rows: 240px 200px auto auto 240px 80px;
+  }
+
+  .nav .flex {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
 }
