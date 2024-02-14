@@ -1,16 +1,16 @@
+/*******************************************************************
+  Reset.
+ *******************************************************************/
+
 :root {
   --clr-text: hsl(198, 25%, 10%);
-  --clr-navtext: hsl(180, 0%, 46%);
   --clr-background: hsl(206, 33%, 96%);
   --clr-primary-100: hsl(201, 34%, 26%);
   --clr-primary-5: hsl(201, 34%, 26%, 0.05);
-  --clr-secondary: hsl(201, 39%, 66%);
-  --clr-accent: hsl(202, 44%, 41%);
 }
 
 * {
   box-sizing: border-box;
-  /* border: 1px solid red; */
 }
 
 body {
@@ -37,7 +37,7 @@ h3 {
 }
 
 p {
-  line-height: 1.7;
+  line-height: 1.7; /* Större mellanrum mellan raderna gör texten enklare att läsa */
   margin: 0;
 }
 
@@ -46,17 +46,41 @@ img {
   width: 100%;
 }
 
-.margin-top-2rem {
-  margin-top: 2rem;
-}
+/*******************************************************************
+  Hjälpklasser
+ *******************************************************************/
 
 /* 
- Gör så att alla element utom det första inom elementet med klassen flow får extra margin över sig.
+ Följande gör så att alla element utom det första inom elementet med klassen flow får extra margin över sig.
  Detta gör det väldigt enkelt att få bra mellanrum mellan headings och paragrafer etc.
  */
 .flow > * + * {
   margin-block-start: 1rem;
 }
+
+.flex {
+  display: flex;
+}
+
+.flex-dir-col {
+  flex-direction: column;
+}
+
+.flex-space-between {
+  justify-content: space-between;
+}
+
+.border-rundad-1rem {
+  border-radius: 1rem;
+}
+
+.margin-top-2rem {
+  margin-top: 2rem;
+}
+
+/*******************************************************************
+  Header
+ *******************************************************************/
 
 .header {
   grid-column: full-bredd;
@@ -83,15 +107,54 @@ img {
   grid-column: inset;
 }
 
+.logo {
+  grid-column: inset;
+}
+
+/*******************************************************************
+  Meny
+ *******************************************************************/
+
 .navbar {
   grid-column: main-start / aside-end;
   grid-row: 2;
   border-bottom: 1px solid #dddddd;
 }
+
 .navbar .nav {
   margin-inline: auto;
   padding-top: 0.9rem;
 }
+
+.nav ul {
+  list-style: none;
+  gap: 2.5rem;
+  margin: 0;
+  padding-inline-start: 0.2rem;
+}
+
+.nav li a {
+  text-decoration: none;
+  color: var(--clr-primary-100);
+  transition: opacity 0.3s ease;
+}
+
+/* Länkar inom nav klassen, inom ett list-item element som inte har klassen active. */
+.nav li a:hover:not(.active) {
+  opacity: 0.6;
+  transition: opacity 0.3s ease;
+}
+
+.nav li .active {
+  color: var(--clr-text);
+  font-weight: 500;
+  cursor: default;
+}
+
+/*******************************************************************
+  Main & högra sidopanelen.
+ *******************************************************************/
+
 .main {
   grid-column: main;
   grid-row: 3;
@@ -102,6 +165,19 @@ img {
   grid-row: 3;
   background-color: var(--clr-primary-5);
   padding: 2rem;
+}
+
+/*******************************************************************
+  Dekorativ bakgrundsbild och sidfot.
+ *******************************************************************/
+
+.dekorativ-bild {
+  grid-column: full-bredd;
+  grid-row: 4;
+  background-image: linear-gradient(to bottom, var(--clr-background), transparent), 
+                    url('https://picsum.photos/2000/300?grayscale');
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .footer {
@@ -118,30 +194,9 @@ img {
   align-self: center;
 }
 
-.nav ul {
-  list-style: none;
-  gap: 2.5rem;
-  margin: 0;
-  padding-inline-start: 0.2rem;
-}
-
-.nav li a {
-  text-decoration: none;
-  color: var(--clr-primary-100);
-  transition: opacity 0.3s ease;
-}
-
-/* Länkar inom nav klassen inom ett list-item element som inte har klassen active. */
-.nav li a:hover:not(.active) {
-  opacity: 0.6;
-  transition: opacity 0.3s ease;
-}
-
-.nav li .active {
-  color: var(--clr-text);
-  font-weight: 500;
-  cursor: default;
-}
+/*******************************************************************
+  Länkar.
+ *******************************************************************/
 
 .knapp {
   display: inline-block;
@@ -159,19 +214,15 @@ img {
   transition: transform 0.2s ease;
 }
 
+/*******************************************************************
+  Grid
+ *******************************************************************/
 .grid-wrapper {
   display: grid; /* Använder grid för huvudsakliga layouten */
   min-height: 100svh; /* Gör sidan minst hög nog för mobila enheter */
 
   /* Namnge gridlinjer och på så sätt skapa grid kolumner. */
-  grid-template-columns:
-    [full-bredd-start] minmax(auto, 1.25fr)
-    [inset-start main-start] 4fr [main-end aside-start] minmax(
-      calc(300px + 4rem),
-      1.5fr
-    )
-    [aside-end inset-end] minmax(auto, 1.25fr)
-    [full-bredd-end];
+  grid-template-columns: [full-bredd-start] minmax(auto, 1.25fr) [inset-start main-start] 4fr [main-end aside-start] minmax(calc(300px + 4rem), 1.5fr) [aside-end inset-end] minmax(auto, 1.25fr) [full-bredd-end];
   grid-template-rows: 240px 56px auto 240px 80px;
   column-gap: 4rem;
 }
@@ -179,49 +230,13 @@ img {
 /* Specialfall för headern då vi vill ha bakgrunden full-bredd, men logo och titeln ska vara inom inset kolumnen */
 .grid-header {
   display: grid;
-  grid-template-columns:
-    [full-bredd-start] minmax(auto, 1.25fr)
-    [inset-start main-start] 4fr [main-end aside-start] minmax(
-      calc(300px + 4rem),
-      1.5fr
-    )
-    [aside-end inset-end] minmax(auto, 1.25fr)
-    [full-bredd-end];
+  grid-template-columns: [full-bredd-start] minmax(auto, 1.25fr) [inset-start main-start] 4fr [main-end aside-start] minmax(calc(300px + 4rem), 1.5fr) [aside-end inset-end] minmax(auto, 1.25fr) [full-bredd-end];
   column-gap: 4rem;
 }
 
-.logo {
-  grid-column: inset;
-}
-
-.flex {
-  display: flex;
-}
-
-.flex-dir-col {
-  flex-direction: column;
-}
-
-.flex-space-between {
-  justify-content: space-between;
-}
-
-.border-rundad-1rem {
-  border-radius: 1rem;
-}
-
-.dekorativ-bild {
-  grid-column: full-bredd;
-  grid-row: 4;
-  background-image: linear-gradient(
-      to bottom,
-      var(--clr-background),
-      transparent
-    ),
-    url('https://picsum.photos/2000/300?grayscale');
-  background-repeat: no-repeat;
-  background-size: cover;
-}
+/*******************************************************************
+  Media queries för mobiler och paddor.
+ *******************************************************************/
 
 @media (max-width: 1024px) {
   .grid-wrapper {
