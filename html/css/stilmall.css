@@ -10,25 +10,35 @@
 
 * {
   box-sizing: border-box;
-  margin: 0;
   /* border: 1px solid red; */
 }
 
 body {
   background: var(--clr-background);
   font-family: system-ui, sans-serif;
-  line-height: 1.6;
   color: var(--clr-text);
+  margin: 0;
 }
 
 h1,
 h2,
-h3 {
-  line-height: 1.1;
+h3,
+h4 {
+  line-height: 1;
+  margin: 0;
 }
 
 h2 {
   font-size: 3rem;
+}
+
+h3 {
+  font-size: 2rem;
+}
+
+p {
+  line-height: 1.7;
+  margin: 0;
 }
 
 img {
@@ -58,16 +68,19 @@ img {
   justify-content: center;
 }
 
-.header p {
+.title p {
   margin-top: 1rem;
-  align-self: center;
+  text-align: center;
   opacity: 0.7;
 }
 
 .site-title {
   font-size: 4rem;
-  align-self: center;
   text-align: center;
+}
+
+.title {
+  grid-column: inset;
 }
 
 .navbar {
@@ -77,19 +90,11 @@ img {
 }
 .navbar .nav {
   margin-inline: auto;
-  padding-top: 0.8rem;
+  padding-top: 0.9rem;
 }
 .main {
   grid-area: main;
   grid-row: 3;
-}
-
-.main h2 {
-  max-width: 20ch;
-}
-
-.main p {
-  max-width: 120ch;
 }
 
 .aside {
@@ -116,20 +121,17 @@ img {
 .nav ul {
   list-style: none;
   gap: 2.5rem;
+  margin: 0;
   padding-inline-start: 0.2rem;
-}
-
-.nav li {
-  display: flex;
-  align-self: center;
 }
 
 .nav li a {
   text-decoration: none;
-  color: var(--clr-navtext);
+  color: var(--clr-primary-100);
   transition: opacity 0.3s ease;
 }
 
+/* Länkar inom nav klassen inom ett list-item element som inte har klassen active. */
 .nav li a:hover:not(.active) {
   opacity: 0.6;
   transition: opacity 0.3s ease;
@@ -137,6 +139,24 @@ img {
 
 .nav li .active {
   color: var(--clr-text);
+  font-weight: 500;
+  cursor: default;
+}
+
+.knapp {
+  display: inline-block;
+  padding: 1rem 2rem;
+  border-radius: 10px;
+  background-color: var(--clr-primary-100);
+  color: var(--clr-background);
+  text-decoration: none;
+  font-weight: 500;
+  transition: transform 0.2s ease;
+}
+
+.knapp:hover {
+  transform: translateY(-3px);
+  transition: transform 0.2s ease;
 }
 
 .grid-wrapper {
@@ -152,8 +172,26 @@ img {
     )
     [aside-end inset-end] minmax(auto, 1.25fr)
     [full-bredd-end];
-  grid-template-rows: 240px 56px 5fr 240px 80px;
-  column-gap: 5rem;
+  grid-template-rows: 240px 56px 4fr 240px 80px;
+  column-gap: 4rem;
+}
+
+/* Specialfall för headern då vi vill ha bakgrunden full-bredd men logo och titeln ska vara inom inset */
+.grid-header {
+  display: grid;
+  grid-template-columns:
+    [full-bredd-start] minmax(auto, 1.25fr)
+    [inset-start main-start] 4fr [main-end aside-start] minmax(
+      calc(300px + 4rem),
+      1.5fr
+    )
+    [aside-end inset-end] minmax(auto, 1.25fr)
+    [full-bredd-end];
+  column-gap: 4rem;
+}
+
+.logo {
+  grid-column: inset;
 }
 
 .flex {
@@ -168,7 +206,7 @@ img {
   justify-content: space-between;
 }
 
-.border-rounded {
+.border-rundad-1rem {
   border-radius: 1rem;
 }
 
