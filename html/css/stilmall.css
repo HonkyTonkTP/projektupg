@@ -7,10 +7,11 @@
   --clr-background: hsl(206, 33%, 96%);
   --clr-primary-100: hsl(201, 34%, 26%);
   --clr-primary-5: hsl(201, 34%, 26%, 0.05);
+  --clr-accent: hsl(202, 44%, 41%);
 }
 
 * {
-  box-sizing: border-box;
+  box-sizing: border-box; /* Boxens storlek inkluderar padding och kantlinjer */
 }
 
 body {
@@ -37,7 +38,7 @@ h3 {
 }
 
 p {
-  line-height: 1.7; /* Större mellanrum mellan raderna gör texten enklare att läsa */
+  line-height: 1.7; /* Större mellanrum mellan raderna gör texten lättare att läsa */
   margin: 0;
 }
 
@@ -55,7 +56,7 @@ img {
  Detta gör det väldigt enkelt att få bra mellanrum mellan headings och paragrafer etc.
  */
 .flow > * + * {
-  margin-block-start: 1rem;
+  margin-top: 1rem;
 }
 
 .flex {
@@ -109,10 +110,22 @@ img {
 
 .logo {
   grid-column: inset;
+  color: var(--clr-background);
+  font-weight: 800;
+}
+
+.logo a
+{
+  text-decoration: none;
+  color: var(--clr-background);
+}
+
+.logo a:visited {
+  color: var(--clr-background);
 }
 
 /*******************************************************************
-  Meny
+  Huvudmeny
  *******************************************************************/
 
 .navbar {
@@ -174,6 +187,7 @@ img {
 .dekorativ-bild {
   grid-column: full-bredd;
   grid-row: 4;
+  /* Enkel linjär gradient över bilden uppifrån, från bakgrundsfärgen till transparent */
   background-image: linear-gradient(to bottom, var(--clr-background), transparent), 
                     url('https://picsum.photos/2000/300?grayscale');
   background-repeat: no-repeat;
@@ -195,8 +209,16 @@ img {
 }
 
 /*******************************************************************
-  Länkar.
+  Generella länkar.
  *******************************************************************/
+
+a {
+  color: var(--clr-accent);
+}
+
+a:visited {
+  color: var(--clr-primary-100);
+}
 
 .knapp {
   display: inline-block;
@@ -214,6 +236,10 @@ img {
   transition: transform 0.2s ease;
 }
 
+.knapp:visited {
+  color: var(--clr-background);
+}
+
 /*******************************************************************
   Grid
  *******************************************************************/
@@ -222,16 +248,16 @@ img {
   min-height: 100svh; /* Gör sidan minst hög nog för mobila enheter */
 
   /* Namnge gridlinjer och på så sätt skapa grid kolumner. */
-  grid-template-columns: [full-bredd-start] minmax(auto, 1.25fr) [inset-start main-start] 4fr [main-end aside-start] minmax(calc(300px + 4rem), 1.5fr) [aside-end inset-end] minmax(auto, 1.25fr) [full-bredd-end];
+  grid-template-columns: [full-bredd-start] minmax(auto, 1.25fr) [inset-start main-start] 4fr [main-end aside-start] calc(300px + 4rem) [aside-end inset-end] minmax(auto, 1.25fr) [full-bredd-end];
   grid-template-rows: 240px 56px auto 240px 80px;
-  column-gap: 4rem;
+  column-gap: 5rem;
 }
 
 /* Specialfall för headern då vi vill ha bakgrunden full-bredd, men logo och titeln ska vara inom inset kolumnen */
 .grid-header {
   display: grid;
-  grid-template-columns: [full-bredd-start] minmax(auto, 1.25fr) [inset-start main-start] 4fr [main-end aside-start] minmax(calc(300px + 4rem), 1.5fr) [aside-end inset-end] minmax(auto, 1.25fr) [full-bredd-end];
-  column-gap: 4rem;
+  grid-template-columns: [full-bredd-start] minmax(auto, 1.25fr) [inset-start main-start] 4fr [main-end aside-start] calc(300px + 4rem) [aside-end inset-end] minmax(auto, 1.25fr) [full-bredd-end];
+  column-gap: 5rem;
 }
 
 /*******************************************************************
@@ -242,6 +268,14 @@ img {
   .grid-wrapper {
     grid-template-rows: 240px 56px auto auto 240px 80px;
   }
+  
+  .grid-header {
+    column-gap: 2rem;
+  }
+
+  .nav .flex {
+    justify-content: space-around;
+  }
 
   .main {
     grid-column: inset;
@@ -250,7 +284,6 @@ img {
   .aside {
     grid-column: inset;
     grid-row: 4;
-    column-gap: 2rem;
   }
 
   .dekorativ-bild {
@@ -265,6 +298,7 @@ img {
 @media (max-width: 840px) {
   .grid-wrapper {
     grid-template-rows: 240px 200px auto auto 240px 80px;
+    column-gap: 2rem;
   }
 
   .nav .flex {
@@ -272,4 +306,5 @@ img {
     align-items: center;
     gap: 1rem;
   }
+
 }
